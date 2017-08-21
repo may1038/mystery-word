@@ -9,25 +9,25 @@ const words = require("./words")
 // go to words.js and get the value of randomWord
 const randomWord = words.randomWord
 const rando = randomWord.length
-const dash = "_"
+const dash = ["_"]
 const emptyArray = []
-
 
 app.engine("mustache", mustache())
 app.set("view engine", "mustache")
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({extended: false}))
-//create an empty array that breaks the words up into individual letters (split function)
 
+//push result inside an empty array
+//set the randomWord.length to underscores
+//somehow get the randomWord to be invisible
+//result is an array... loop through results.length??
 
-
-//figure out how to get underscores on your page that are equal to the length of the word thats been generated.
-//get the length of the randomWord and add dash(s) for the length
-//dash === rando
 app.get("/", function(req, res) {
+  let result = randomWord.split("")
   res.render("index", {
     dash: dash,
-    emptyArray: emptyArray
+    emptyArray: emptyArray,
+    result: result
   })
 })
 
