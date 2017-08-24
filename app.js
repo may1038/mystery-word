@@ -8,31 +8,39 @@ const validator = require("express-validator")
 const words = require("./words")
 // go to words.js and get the value of randomWord
 const randomWord = words.randomWord
-const rando = randomWord.length
-const dash = ["_"]
+const random = randomWord.length
 const emptyArray = []
+const result = words.result
+const dashArray = words.dashArray
 
 app.engine("mustache", mustache())
 app.set("view engine", "mustache")
 app.use(express.static("public"))
-app.use(bodyParser.urlencoded({extended: false}))
-
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+)
+console.log(words.result)
 //push result inside an empty array
-//set the randomWord.length to underscores
 //somehow get the randomWord to be invisible
 //result is an array... loop through results.length??
 
 app.get("/", function(req, res) {
-  let result = randomWord.split("")
   res.render("index", {
-    dash: dash,
     emptyArray: emptyArray,
-    result: result
+    result: result,
+    dashArray: dashArray
   })
 })
 
 app.post("/letter", function(req, res) {
   const guess = req.body.letter
+  for (let i = 0; i < result.length; i++) {
+    if (guess === result[i]) {
+      dashArray[i] = result[i]
+    }
+  }
   emptyArray.push(guess)
   res.redirect("/")
 })
