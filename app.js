@@ -21,28 +21,37 @@ app.use(
     extended: false
   })
 )
-console.log(words.result)
-//push result inside an empty array
-//somehow get the randomWord to be invisible
-//result is an array... loop through results.length??
 
 app.get("/", function(req, res) {
-  res.render("index", {
-    emptyArray: emptyArray,
-    result: result,
-    dashArray: dashArray
-  })
-})
-
-app.post("/letter", function(req, res) {
-  const guess = req.body.letter
-  for (let i = 0; i < result.length; i++) {
-    if (guess === result[i]) {
-      dashArray[i] = result[i]
+  let winspace = false
+  for (let i = 0; i < randomWord.length; i++) {
+    if (emptyArray.indexOf(randomWord[i]) >= 0) {
+      result[i] = randomWord[i]
+    } else {
+      result[i] = "_"
+      winspace = true
     }
   }
-  emptyArray.push(guess)
+  if (!winspace) {
+    res.redirect("/win")
+  } else {
+    res.render("index", {
+      emptyArray: emptyArray,
+      result: result,
+      dashArray: dashArray,
+      randomWord: randomWord
+    })
+  }
+})
+
+app.post("/", function(req, res) {
+  const guessWord = req.body.letter
+  emptyArray.push(guessWord)
   res.redirect("/")
+})
+
+app.get("/win", function(req, res) {
+  res.render("win")
 })
 
 app.listen("3000", function() {

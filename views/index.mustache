@@ -11,17 +11,21 @@
   <div class="header">
     <h1>Mystery Word</h1>
   </div>
+  <div class="hint">
+    <h4>Hint:</h4>
+      <h4 class="randomWord">{{randomWord}}</h4>
+  </div>
   <div class="wrapper">
     <div class="word">
-      {{#dashArray}}
+      {{#result}}
         {{.}}
-      {{/dashArray}}
+      {{/result}}
     </div>
     <div class="lettersGuessed">
       <h3>Letters Guessed: {{emptyArray}}</h3>
     </div>
     <div class="form">
-      <form class="" action="/letter" method="post">
+      <form class="" action="/" method="post">
         <input type="text" name="letter" value="" placeholder="Enter Letter">
         <input type="submit" name="button" value="Good luck, sucka!">
       </form>
